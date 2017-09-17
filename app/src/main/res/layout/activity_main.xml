@@ -13,12 +13,6 @@
         android:layout_height="wrap_content"
         android:text="Download Image" />
 
-    <Button
-        android:id="@+id/button_setImages"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="set Images" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_imageList"
         android:layout_width="match_parent"

@@ -4,7 +4,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by tedkim on 2017. 9. 16..
@@ -12,6 +11,6 @@ import retrofit2.http.Query;
 
 public interface ImageLoadingService {
 
-    @GET("/Images/Thumbnails/{no}/{fileName}")
-    Call<ResponseBody> imageList(@Path("no") String no, @Query("fileName") String fileName);
+    @GET("/Images/Thumbnails/{filePath}/{fileName}")
+    Call<ResponseBody> imageList(@Path("filePath") String filePath, @Path("fileName") String fileName);
 }

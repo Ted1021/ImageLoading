@@ -18,13 +18,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     Context mContext;
     ArrayList<Bitmap> mDataset = new ArrayList<>();
-
     LayoutInflater mLayoutInflater;
 
     public ImageAdapter(Context context, ArrayList<Bitmap> dataset) {
         mContext = context;
         mDataset = dataset;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -40,13 +40,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.image_item, parent, false));
+        View itemView = mLayoutInflater.inflate(R.layout.image_item, parent, false);
+        return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-//        holder.mThumbnail.setImageResource(mDataset.get(position));
+        holder.mThumbnail.setImageBitmap(mDataset.get(position));
     }
 
     @Override
