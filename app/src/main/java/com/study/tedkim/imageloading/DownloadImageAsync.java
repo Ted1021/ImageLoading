@@ -52,10 +52,11 @@ public class DownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
 
         if (result != null) {
             mCache.addBitmapToCache(mImageUrl, result);
+            mAdapter.notifyDataSetChanged();
+            Log.d("CHECK_CACHE", "download url on cache : "+mImageUrl);
         }
     }
 
-    // 큰 이미지에 대해 현재 화면에 알맞게 이미지를 처리하는 로직 추가
     private Bitmap getImage(String imageUrl) {
 
         if (mCache.getBitmapFromCache(imageUrl) == null) {
@@ -90,8 +91,9 @@ public class DownloadImageAsync extends AsyncTask<String, Void, Bitmap> {
 
                     return mImage;
                 }
+
             } catch (Exception e) {
-                Log.e("CHECK_IMAGE", e.toString());
+                Log.e("FAIL_IMAGE", e.toString());
             }
         }
 

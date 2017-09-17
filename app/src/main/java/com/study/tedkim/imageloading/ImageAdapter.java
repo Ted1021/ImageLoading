@@ -2,6 +2,7 @@ package com.study.tedkim.imageloading;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,14 @@ import java.util.ArrayList;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
     Context mContext;
-    ArrayList<Bitmap> mDataset = new ArrayList<>();
+    ArrayList<String> mDataset = new ArrayList<>();
     LayoutInflater mLayoutInflater;
 
-    public ImageAdapter(Context context, ArrayList<Bitmap> dataset) {
+    public ImageAdapter(Context context, ArrayList<String> dataset) {
+
         mContext = context;
         mDataset = dataset;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -33,6 +34,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             mThumbnail = (ImageView) itemView.findViewById(R.id.imageView_thumbnail);
         }
     }
@@ -47,11 +49,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.mThumbnail.setImageBitmap(mDataset.get(position));
+        Bitmap thumbnail = ImageCache.getInstance().getBitmapFromCache(mDataset.get(position));
+
+        if (thumbnail != null) {
+            holder.mThumbnail.setImageBitmap(thumbnail);
+        } else {
+            holder.mThumbnail.setImageBitmap(null);
+            DownloadImageAsync downloadImage = new DownloadImageAsync(this, 172, 172);
+            downloadImage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mDataset.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
+
         return mDataset.size();
     }
 }
